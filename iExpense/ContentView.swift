@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var expenses = Expenses()
     
+    @State private var search = ""
     @State private var showingAddExpense = false
     @State private var isEditing = false
     
@@ -80,6 +81,33 @@ struct ContentView: View {
                     showingAddExpense = true
                 } label: {
                     Image(systemName: "plus")
+                }
+            }
+            .searchable(text: $search) {
+                ForEach(expenses.items.filter { $0.name.contains(search) }) { item in
+                    HStack {
+                        VStack {
+                            Text(item.name)
+                                .font(.headline)
+                            Text(item.type)
+                        }
+                        
+                        Spacer()
+                        VStack {
+                            Text(item.amount, format: expenses.currency)
+                        }
+                        .frame(minWidth: 100, idealWidth: 100, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: .center)
+                        .background {
+                            if item.amount > 100 {
+                                Color.red
+                            } else if item.amount >= 11 {
+                                Color.yellow
+                            } else {
+                                Color.green
+                            }
+                        }
+                        .cornerRadius(10)
+                    }
                 }
             }
         }
