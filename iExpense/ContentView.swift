@@ -23,7 +23,10 @@ struct ContentView: View {
                             VStack {
                                 Text(item.name)
                                     .font(.headline)
+//                                    .accessibilityLabel(item.name)
                                 Text(item.type)
+                                    .accessibilityElement()
+//                                    .accessibilityHint(item.type)
                             }
                             
                             Spacer()
@@ -41,8 +44,12 @@ struct ContentView: View {
                                 }
                             }
                             .cornerRadius(10)
+//                            .accessibilityLabel("\(item.amount)")
                             
                         }
+                        .accessibilityElement()
+                        .accessibilityLabel("Item \(item.name) Amount $\(String(format: "%.2f", item.amount))")
+                        .accessibilityHint(item.type)
                     }
                     .onDelete(perform: removeItem)
                 }
@@ -53,6 +60,7 @@ struct ContentView: View {
                                 Text(item.name)
                                     .font(.headline)
                                 Text(item.type)
+                                    .accessibilityHidden(true)
                             }
                             
                             Spacer()
@@ -71,6 +79,9 @@ struct ContentView: View {
                             }
                             .cornerRadius(10)
                         }
+                        .accessibilityElement()
+                        .accessibilityLabel("Item \(item.name) Amount $\(String(format: "%.2f", item.amount))")
+                        .accessibilityHint(item.type)
                     }
                     .onDelete(perform: removeItem)
                 }
